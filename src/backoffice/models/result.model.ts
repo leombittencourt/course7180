@@ -1,10 +1,10 @@
 export class Result {
 
     constructor(
-        public success: boolean,
         public message: string,
+        public success: boolean,
         public data: any,
         public errors: any,
-        ) {
+    ) {
     }
 }

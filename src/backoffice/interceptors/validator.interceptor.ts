@@ -1,6 +1,5 @@
 import { NestInterceptor, Injectable, ExecutionContext, CallHandler, HttpException, HttpStatus } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Contract } from '../contracts/contract';
 import { Result } from '../models/result.model';
 
@@ -17,7 +16,7 @@ export class ValidatorInterceptor implements NestInterceptor {
 
         if (!valid) {
             throw new HttpException(
-                new Result(false, 'Ops, algo saiu errado', null, this.contract.errors)
+                new Result('Ops, algo saiu errado', false, null, this.contract.errors)
                 , HttpStatus.BAD_REQUEST);
         }
 

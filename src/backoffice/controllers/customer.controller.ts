@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseInterceptors } from '@nestjs/common';
-import { Customer } from '../models/customer.model';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../interceptors/validator.interceptor';
 import { CreateCustomerContract } from '../contracts/customer.contracts';
+import { CreateCustomerDto } from '../dtos/create-customer-dto';
 
 // localhost:3000/customers
 @Controller('v1/customers')
@@ -10,8 +10,8 @@ export class CustomerController {
     @Get()
     get() {
         return new Result(
-            true,
             null,
+            true,
             [],
             null,
         );
@@ -20,8 +20,8 @@ export class CustomerController {
     @Get(':document')
     getById(@Param('document') document) {
         return new Result(
-            true,
             null,
+            true,
             {},
             null,
         );
@@ -29,10 +29,10 @@ export class CustomerController {
 
     @Post()
     @UseInterceptors(new ValidatorInterceptor(new CreateCustomerContract()))
-    post(@Body() body: Customer) {
+    post(@Body() body: CreateCustomerDto) {
         return new Result(
-            true,
             'Cliente criado com sucesso!',
+            true,
             body,
             null,
         );
@@ -41,8 +41,8 @@ export class CustomerController {
     @Put(':document')
     put(@Param('document') document, @Body() body) {
         return new Result(
-            true,
             'Cliente atualizado com sucesso!',
+            true,
             body,
             null,
         );
@@ -51,8 +51,8 @@ export class CustomerController {
     @Delete(':document')
     delete(@Param('document') document) {
         return new Result(
-            true,
             'Cliente removido com sucesso!',
+            true,
             null,
             null,
         );
