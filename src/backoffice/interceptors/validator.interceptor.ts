@@ -16,9 +16,9 @@ export class ValidatorInterceptor implements NestInterceptor {
         const valid = this.contract.validate(body);
 
         if (!valid) {
-            return next
-                .handle()
-                .pipe(map(() => new Result(false, 'Ops, algo saiu errado', null, this.contract.errors), HttpStatus.BAD_REQUEST));
+            throw new HttpException(
+                new Result(false, 'Ops, algo saiu errado', null, this.contract.errors)
+                , HttpStatus.BAD_REQUEST);
         }
 
         return next.handle();
