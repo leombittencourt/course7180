@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0-ijztf.mongodb.net/admin?retryWrites=true'),
+    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0-ijztf.mongodb.net/test?retryWrites=true'),
     BackofficeModule,
   ],
   controllers: [],
