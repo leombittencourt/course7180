@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { BackofficeModule } from './backoffice/backoffice.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [BackofficeModule],
+  imports: [
+    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0-ijztf.mongodb.net/admin?retryWrites=true'),
+    BackofficeModule,
+  ],
   controllers: [],
   providers: []
 })
