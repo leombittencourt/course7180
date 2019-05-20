@@ -42,4 +42,19 @@ export class CustomerService {
             },
         }, options);
     }
+
+    async updatePet(document: string, id: string, data: Pet): Promise<Customer> {
+        return await this.model.findOneAndUpdate({ document, 'pets._id': id }, {
+            $set: {
+                'pets.$': data,
+            },
+        });
+    }
+
+    async findAll(): Promise<Customer[]> {
+        return await this.model
+            .find({}, 'name email document')
+            .sort('name')
+            .exec();
+    }
 }

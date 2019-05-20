@@ -7,11 +7,11 @@ import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../models/customer.model';
-import { async } from 'rxjs/internal/scheduler/async';
 import { Address } from '../models/address.model';
 import { CreateAddressContract } from '../contracts/customer/create-address.contract';
 import { CreatePetContract } from '../contracts/customer/create-pet.contract';
 import { Pet } from '../models/pet.model';
+
 
 // localhost:3000/customers
 @Controller('v1/customers')
@@ -65,5 +65,22 @@ export class CustomerController {
         } catch (error) {
             throw new HttpException(new Result('Não foi possível adicionar seu pet!', false, null, error), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Put(':document/pets/:id')
+    @UseInterceptors(new ValidatorInterceptor(new CreatePetContract()))
+    async updatePet(@Param('document') document, @Param('id') id, @Body() model: Pet) {
+        try {
+            await this.customerService.updatePet(document, id, model);
+            return new Result(null, true, model, null);
+        } catch (error) {
+            throw new HttpException(new Result('Não foi possível atualizar seu pet!', false, null, error), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Get()
+    async getAll() {
+        const customers = await this.customerService.findAll();
+        return new Result(null, true, customers, null);
     }
 }
