@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 import { Injectable, HttpService } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Customer } from '../models/customer.model';
 import { Address } from '../models/address.model';
 import { AddressType } from '../enums/address-type.enum';
+import { Customer } from '../models/customer.model';
 
 @Injectable()
 export class AddressService {

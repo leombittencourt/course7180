@@ -12,13 +12,20 @@ import { CreateAddressContract } from '../contracts/customer/create-address.cont
 import { CreatePetContract } from '../contracts/customer/create-pet.contract';
 import { Pet } from '../models/pet.model';
 import { QueryDto } from '../dtos/query.dto';
+import { PetService } from '../services/pet.service';
+import { AddressService } from '../services/address.service';
+import { AddressType } from '../enums/address-type.enum';
 
 
 // localhost:3000/customers
 @Controller('v1/customers')
 export class CustomerController {
 
-    constructor(private readonly accountService: AccountService, private readonly customerService: CustomerService) {
+    constructor(
+        private readonly accountService: AccountService,
+        private readonly customerService: CustomerService,
+        private readonly petService: PetService,
+        private readonly addressService: AddressService) {
     }
 
     @Post()
@@ -39,7 +46,7 @@ export class CustomerController {
     @UseInterceptors(new ValidatorInterceptor(new CreateAddressContract()))
     async addBillingAddress(@Param('document') document, @Body() model: Address) {
         try {
-            await this.customerService.addBillingAddress(document, model);
+            await this.addressService.create(document, model, AddressType.Billing);
             return new Result(null, false, model, null);
         } catch (error) {
             throw new HttpException(new Result('Não foi possível adicionar seu endereço!', false, null, error), HttpStatus.BAD_REQUEST);
@@ -50,7 +57,7 @@ export class CustomerController {
     @UseInterceptors(new ValidatorInterceptor(new CreateAddressContract()))
     async addShippingAddress(@Param('document') document, @Body() model: Address) {
         try {
-            await this.customerService.addShippingAddress(document, model);
+            await this.addressService.create(document, model, AddressType.Shipping);
             return new Result(null, false, model, null);
         } catch (error) {
             throw new HttpException(new Result('Não foi possível adicionar seu endereço!', false, null, error), HttpStatus.BAD_REQUEST);
@@ -61,7 +68,7 @@ export class CustomerController {
     @UseInterceptors(new ValidatorInterceptor(new CreatePetContract()))
     async createPet(@Param('document') document, @Body() model: Pet) {
         try {
-            await this.customerService.createPet(document, model);
+            await this.petService.create(document, model);
             return new Result(null, true, model, null);
         } catch (error) {
             throw new HttpException(new Result('Não foi possível adicionar seu pet!', false, null, error), HttpStatus.BAD_REQUEST);
@@ -72,7 +79,7 @@ export class CustomerController {
     @UseInterceptors(new ValidatorInterceptor(new CreatePetContract()))
     async updatePet(@Param('document') document, @Param('id') id, @Body() model: Pet) {
         try {
-            await this.customerService.updatePet(document, id, model);
+            await this.petService.update(document, id, model);
             return new Result(null, true, model, null);
         } catch (error) {
             throw new HttpException(new Result('Não foi possível atualizar seu pet!', false, null, error), HttpStatus.BAD_REQUEST);
