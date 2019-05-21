@@ -3,6 +3,7 @@ import { Flunt } from '../../utils/flunt';
 import { Injectable } from '@nestjs/common';
 import { Address } from 'src/backoffice/models/address.model';
 
+
 @Injectable()
 export class CreateAddressContract implements Contract {
     errors: any[];
