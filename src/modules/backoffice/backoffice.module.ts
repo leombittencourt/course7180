@@ -5,6 +5,7 @@ import { CustomerSchema } from './schemas/customer.schema';
 import { UserSchema } from './schemas/user.schema';
 import { AccountService } from './services/account.service';
 import { CustomerService } from './services/customer.service';
+import { AddressService } from './services/address.service';
 
 @Module({
     imports: [
@@ -19,6 +20,6 @@ import { CustomerService } from './services/customer.service';
             },
         ])],
     controllers: [CustomerController],
-    providers: [AccountService, CustomerService],
+    providers: [AccountService, AddressService, CustomerService],
 })
 export class BackofficeModule { }
