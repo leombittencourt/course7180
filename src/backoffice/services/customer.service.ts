@@ -57,4 +57,11 @@ export class CustomerService {
             .sort('name')
             .exec();
     }
+
+    async find(document): Promise<Customer> {
+        return await this.model
+            .find({ document })
+            .polulate('user', 'username')
+            .exec();
+    }
 }

@@ -83,4 +83,10 @@ export class CustomerController {
         const customers = await this.customerService.findAll();
         return new Result(null, true, customers, null);
     }
+
+    @Get(':document')
+    async get(@Param('document') document) {
+        const customer = await this.customerService.find(document);
+        return new Result(null, true, customer, null);
+    }
 }
