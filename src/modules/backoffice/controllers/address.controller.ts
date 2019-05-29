@@ -2,9 +2,9 @@ import { Controller, Post, Param, Body, UseInterceptors, HttpException, HttpStat
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../../interceptors/validator.interceptor';
 import { Address } from '../models/address.model';
-import { CreateAddressContract } from '../contracts/customer/create-address.contract';
 import { AddressService } from '../services/address.service';
 import { AddressType } from '../enums/address-type.enum';
+import { CreateAddressContract } from '../contracts/address/create-address.contract';
 
 // localhost:3000/v1/addresses/123123/billing
 @Controller('v1/addresses')
