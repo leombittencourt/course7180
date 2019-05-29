@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from '../models/customer.model';
 import { Pet } from '../models/pet.model';
 
-
 @Injectable()
 export class PetService {
     constructor(@InjectModel('Customer') private readonly model: Model<Customer>) { }
