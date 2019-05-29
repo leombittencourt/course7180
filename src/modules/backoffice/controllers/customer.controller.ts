@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Param, Body, UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseInterceptors, HttpException, HttpStatus, Put } from '@nestjs/common';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../../interceptors/validator.interceptor';
 import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
-import { CreateCustomerDto } from '../dtos/create-customer.dto';
+import { CreateCustomerDto } from '../dtos/customer/create-customer.dto';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../models/customer.model';
 import { QueryDto } from '../dtos/query.dto';
+import { UpdateCustomerContract } from '../contracts/customer/update-customer.contract';
+import { UpdateCustomerDto } from '../dtos/customer/update-customer.dto';
+import { CreateCreditCardContract } from '../contracts/customer/create-credit-card.contract';
+import { CreditCard } from '../models/credit-card.model';
 
 
 // localhost:3000/customers
@@ -33,6 +37,17 @@ export class CustomerController {
         }
     }
 
+    @Put(':document')
+    @UseInterceptors(new ValidatorInterceptor(new UpdateCustomerContract()))
+    async update(@Param('document') document, @Body() model: UpdateCustomerDto) {
+        try {
+            await this.customerService.update(document, model);
+            return new Result(null, true, model, null);
+        } catch (error) {
+            throw new HttpException(new Result('Não foi possível atualizar seus dados', false, null, error), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Get()
     async getAll() {
         const customers = await this.customerService.findAll();
@@ -49,5 +64,16 @@ export class CustomerController {
     async query(@Body() model: QueryDto) {
         const customers = await this.customerService.query(model);
         return new Result(null, true, customers, null);
+    }
+
+    @Post(':document/credit-cards')
+    @UseInterceptors(new ValidatorInterceptor(new CreateCreditCardContract()))
+    async createCreditCard(@Param('document') document, @Body() model: CreditCard) {
+        try {
+            await this.customerService.saveOrUpdateCreditCard(document, model);
+            return new Result(null, true, model, null);
+        } catch (error) {
+            throw new HttpException(new Result('Não foi possível adicionar seu cartão de crédito', false, null, error), HttpStatus.BAD_REQUEST);
+        }
     }
 }
