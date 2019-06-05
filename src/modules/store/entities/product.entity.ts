@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -10,4 +10,10 @@ export class Product {
 
     @Column('text')
     description: string;
+
+    @Column('decimal')
+    price: number;
+
+    @Column('decimal')
+    quantityOnHand: number;
 }
