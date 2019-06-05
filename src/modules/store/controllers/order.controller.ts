@@ -40,7 +40,7 @@ export class OrderController {
     async post(@Body() model: OrderItemDto[]) {
         try {
             const order = new Order();
-            order.customer = '02393847170';
+            order.customer = '02393847170'; // Vem do Token(JWT);
             order.date = new Date();
             order.number = '1B2D3F5';
             order.items = [];
