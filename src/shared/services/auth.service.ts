@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AccountService } from 'src/modules/backoffice/services/account.service';
+import { AccountService } from '../../modules/backoffice/services/account.service';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
