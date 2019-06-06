@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Post } from '@nestjs/common';
 import { AccountService } from '../services/account.service';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../../../shared/services/auth.service';
+import { JwtAuthGuard } from '../../../shared/guards/auth.guard';
 
 @Controller('v1/accounts')
 export class AccountController {
@@ -16,7 +16,7 @@ export class AccountController {
     }
 
     @Get('')
-    @UseGuards(AuthGuard())
+    @UseGuards(JwtAuthGuard)
 
     findAll() {
         return [];
