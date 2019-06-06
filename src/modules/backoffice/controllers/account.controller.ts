@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Post } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Req } from '@nestjs/common';
 import { AccountService } from '../services/account.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { JwtAuthGuard } from '../../../shared/guards/auth.guard';
@@ -17,8 +17,9 @@ export class AccountController {
 
     @Get('')
     @UseGuards(JwtAuthGuard)
-
-    findAll() {
+    findAll(@Req() r) {
+        // tslint:disable-next-line: no-console
+        console.log(r.user);
         return [];
     }
 }
